@@ -1,0 +1,42 @@
+<div class="container">
+    <h3>Welcome back</h3>
+    <h1>Login</h1>
+    <p>
+        For you money safety, please delete all exrestions for the browser you use to log in to your wallet
+    </p>
+    <div>
+        <form [formGroup]="credentials" (ngSubmit)="login()">
+            <div>
+                <label>User</label>
+                <input type="text" 
+                    class="form-control" 
+                    id="email"
+                    placeholder="Insert user"
+                    formControlName="email">
+            </div>
+          
+            <div>
+                <label>Password</label>
+                <input type="password"
+                        class="form-control"
+                        id="password"
+                        placeholder="Insert password"
+                        formControlName="password" >
+            </div>
+         
+            <div>
+                <button class="btn btn-primary" [disabled]="!credentials.valid">Login</button>
+            </div>
+       
+        </form>
+    </div>
+    <div>
+        <div>
+            <h3>Don't have account?</h3>
+            <p>Registre here</p>    
+        </div>
+        <div>
+            <button class="btn btn-primary">Create account</button>
+        </div>
+    </div>
+</div>
