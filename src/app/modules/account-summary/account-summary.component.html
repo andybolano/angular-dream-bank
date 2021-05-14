@@ -1,1 +1,8 @@
-<p>account-sumary works!</p>
+<app-table
+    #table
+    [config]="configTable"
+    [data]="accounts"
+    [title]="titleTable"
+    (Selected)="selectElement($event)">
+</app-table>
+

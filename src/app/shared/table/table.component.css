@@ -1,0 +1,25 @@
+tr{
+  cursor: pointer;
+}
+th{
+  border-bottom: 1px solid #dee2e6 !important;
+  color:var(--secondary-color);
+  font-family:var(--primary-font);
+  font-size: 0.7rem;
+}
+td{
+  font-size: 0.8rem;
+  font-weight: 200;
+}
+
+.head-table{
+  color: #7a7a7a;
+  font-size: 0.8rem;
+  font-weight: 500 !important;
+  padding: 16px;
+}
+.wrapper-table{
+  border-radius: 6px;
+  box-shadow: var(--shadow);
+  margin-top: 30px;
+}

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AccountSummaryComponent } from './account-summary.component';
 import { AccountSummaryRoutingModule } from './account-summary-routing.module';
+import { SharedModule } from '@bank/shared/shared.module';
 
 
 
@@ -12,7 +13,8 @@ import { AccountSummaryRoutingModule } from './account-summary-routing.module';
   ],
   imports: [
     CommonModule,
-    AccountSummaryRoutingModule
+    AccountSummaryRoutingModule,
+    SharedModule
   ]
 })
 export class AccountSummaryModule { }

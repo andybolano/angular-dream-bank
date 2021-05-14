@@ -1,0 +1,6 @@
+.wrapper-navbar{
+    background-color: var(--primary-color);
+    height: 100vh;
+    position: fixed;
+    width: 180px;
+}

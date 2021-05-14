@@ -1,1 +1,15 @@
-<p>account-transactions works!</p>
+<div class="account-card">
+    <p>
+        {{accountName}}
+    </p>
+    <a [routerLink]="['/account-summary']">Salir</a>
+</div>
+
+<app-table
+    #table
+    [config]="configTable"
+    [data]="transactions"
+    [title]="titleTable"
+    >
+</app-table>
+

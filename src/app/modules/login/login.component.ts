@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ServicesService } from '@bank/services/services.service';
+import { IResult, ICredential, IProfile } from '@bank/shared/interfaces';
+
+
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -8,14 +12,19 @@ import { ServicesService } from '@bank/services/services.service';
 })
 export class LoginComponent implements OnInit {
 
+    profile:IProfile = {
+        id:-1,
+        firtsName:"",
+        lastName:"",
+        lastLogin:"",
+        avatar:"",
+      };
 
-     /** Formulario de inicio */
-     credentials = new FormGroup({
-      email: new FormControl(null, [Validators.required]),
+    credentials = new FormGroup({
+      user: new FormControl(null, [Validators.required]),
       password: new FormControl(null, Validators.required),
     });
 
- 
 
   constructor(private services: ServicesService) { }
 
@@ -23,31 +32,25 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-     
-    if (!this.credentials.valid) {
-        return;
-    }
-
-
- 
-    this.services.utilitiesService.goTo('account-summary');
-
-    /*this.animacion_form = true;
-    let val_form = this.credentials.value;
-
-    this.services.backendService.postBackend('v1/authenticate', {}, val_form, response => {
-        if (response.success) {
-            let token = response.content.token.access_token;
-            this.services.informacionService.setToken(token);
-            setTimeout(() => {
-                this.services.utilidadesService.goTo('becoming-earth');
-                this.animacion_form = false;
-            }, 1000)
+        if (!this.credentials.valid) {
+            return;
         }
-    }, responseErr => {
-        if (!responseErr.success) this.services.notificacionesService.showAlert('error', responseErr.error.message);
-        this.animacion_form = false;
-    })*/
-}
+        const credentials_value:ICredential = this.credentials.value;
+
+        this.services.authService.auth(credentials_value, (response:IResult) => {
+            if (response.success) {
+
+                const token:string = response.content.accessToken;
+                this.profile = response.content;
+
+                this.services.sessionService.setToken(token);
+                this.services.sessionService.setSession(this.profile);
+                this.services.utilitiesService.goTo('account-summary');
+            }
+            
+        }, (errorResponse:any) => {
+            console.log(errorResponse)
+        })
+    }
 
 }

@@ -1,2 +1,24 @@
-<p>profile works!</p>
-<a class="btn btn-primary" [routerLink]="['/full-screen/new-request-product/']">Request new product</a>
+<div class="wrapper-profile">
+    <div class="container">
+        <div class="content-profile">
+            <div class="information-profile">
+                <img [src]="profile.avatar">
+                <div class="text">
+                    <p class="name">Welcome back, {{name}}!</p>
+                    <p>{{lastLogin}}</p>
+                </div>
+            </div>
+            <div class="content-balance">
+                <p>Total Balance</p>
+                <h5>{{totalBalance$ | async | currency}}</h5>
+            </div>
+            <div class="content-options">
+                <a class="btn btn-outline-light" [routerLink]="['/full-screen/new-request-product/']">Request new product</a>
+                <a class="btn btn-outline-light" [routerLink]="['/full-screen/new-request-product/']">Make transfer</a>
+            </div>
+          
+        </div>
+       
+    </div>
+</div>
+

@@ -1,0 +1,25 @@
+
+<div class="wrapper-table">
+<div class="head-table">
+    {{title}}
+</div>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th *ngFor="let column of config"
+                class="text-center">
+                {{ column.title }}
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of dataTable" (click)="selectedRow(data)">
+            <ng-container *ngFor="let column of config">
+                <td *ngIf="column.data">
+                    {{data[column.data]}}
+                </td>
+            </ng-container>
+        </tr>
+    </tbody>
+</table>
+</div>

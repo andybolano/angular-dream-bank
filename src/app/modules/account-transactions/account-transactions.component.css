@@ -1,0 +1,11 @@
+.account-card{
+    align-items: center;
+    background-color: var(--gray-color);
+    border-radius: 5px;
+    justify-content: space-between;
+    display: flex;
+    margin: 10px 0;
+    padding: 10px 20px;
+    box-shadow: var(--shadow);
+    width: 100%;
+}
