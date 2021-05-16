@@ -1,42 +1,54 @@
 <div class="container">
-    <h3>Welcome back</h3>
+
+<div class="logo-negative">
+</div>
+<div class="bg-top"></div>
+<div class="wrapper-login">
+  <div class="container-form">
+    <h5>Welcome back</h5>
+    <div class="line-title"></div>
     <h1>Login</h1>
+    <br>
     <p>
         For you money safety, please delete all exrestions for the browser you use to log in to your wallet
     </p>
-    <div>
+
+    <div class="form">
         <form [formGroup]="credentials" (ngSubmit)="login()">
-            <div>
-                <label>User</label>
-                <input type="text" 
-                    class="form-control" 
-                    id="user"
-                    placeholder="Insert user"
-                    formControlName="user">
+            <div class="form-group">
+              <label>User</label>
+                  <input type="text"
+                  class="form-control"
+                  id="user"
+                  placeholder=""
+                  formControlName="user">
             </div>
-          
-            <div>
-                <label>Password</label>
-                <input type="password"
-                        class="form-control"
-                        id="password"
-                        placeholder="Insert password"
-                        formControlName="password" >
+            <div class="form-group">
+              <label>Password</label>
+                  <input type="password"
+                  class="form-control"
+                  id="password"
+                  placeholder=""
+                  formControlName="password">
+
             </div>
-         
+            <br>
             <div>
                 <button class="btn btn-primary" [disabled]="!credentials.valid">Login</button>
             </div>
-       
+
         </form>
     </div>
+  </div>
+</div>
+
+<div class="wrapper-foo-login">
     <div>
-        <div>
-            <h3>Don't have account?</h3>
-            <p>Registre here</p>    
-        </div>
-        <div>
-            <button class="btn btn-primary">Create account</button>
-        </div>
+        <h5>Don't have account?</h5>
+        <p>Registre here</p>
     </div>
+    <div>
+        <button class="btn btn-outline-primary">Create account</button>
+    </div>
+</div>
 </div>
