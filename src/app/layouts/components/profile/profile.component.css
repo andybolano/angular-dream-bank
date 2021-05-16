@@ -24,7 +24,7 @@ p{
     align-items: center;
     display: flex;
     width: 50%;
-  
+
 }
 
 .information-profile .text{
@@ -55,6 +55,7 @@ p{
 
 .btn{
     margin: 3px 0;
-    min-width: 150px;
+    min-width: 150px !important;
+    max-width: 160px;
 }
-   
+

@@ -1,0 +1,20 @@
+p,h1,h5, label {color:#FFF !important;}
+
+.container-form{
+  margin:auto auto;
+  max-width:400px;
+  position:absolute;
+  top:15%;
+  left:50%;
+  transform:translate(-50%, 0%);
+  width: 90%;
+}
+
+.line-title {
+  background-color:#FFFFFF !important;
+}
+
+.form-group label{
+  left:-120px;
+  width: 120px;
+}

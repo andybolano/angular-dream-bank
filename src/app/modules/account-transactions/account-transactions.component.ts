@@ -20,7 +20,8 @@ export class AccountTransactionsComponent implements OnInit {
     currencyName: "",
     balance: "0",
     currencyCode: "",
-    currencySymbol:""
+    currencySymbol:"",
+    status:false
   }
 
   profile:IProfile = this.service.sessionService.getSession();
@@ -60,11 +61,11 @@ export class AccountTransactionsComponent implements OnInit {
       this.getTransactions(idAccount);
       this.getAccountById(idAccount);
   });
-    
+
   }
 
   getTransactions(idAccount:number){
- 
+
     this.service.transactionService.getTransactionsByAccount(this.profile.id, idAccount,(response:IResult) => {
         if (response.success) {
             this.transactions = response.content;

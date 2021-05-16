@@ -3,27 +3,22 @@ p,h1,h5 {
   color:var(--secondary-color);
 }
 
-.logo-negative{
-  margin:10px;
-  width: 180px;
-  height:80px;
+h5{
+  margin:0;
 }
+
+
 
 .bg-top{
   background-image: url('../../../assets/images/bg-top-login.jpg');
 }
-.line-title {
-  border-radius: 10px;
-  background-color: #c3c3c3;
-  height:3px;
-  margin: auto;
-  margin-bottom: 14px;
-  width: 80px;
 
+
+.line-title {
+  background-color: var(--light-color);
 }
 
 .wrapper-login{
-
   margin:auto auto;
   max-width:360px;
   position:absolute;
@@ -34,26 +29,19 @@ p,h1,h5 {
 }
 
 
-.container-form{
-  text-align:center;
-}
 
-.form-group{
-  position: relative;
-text-align: center;
-}
 
 .form-group label{
   left:-80px;
-  position: absolute;
-  text-align:center;
-  top:8px;
   width: 80px;
+}
+
+.form-control.password{
+  padding-right: 100px;
 }
 
 .btn{
   font-size: 1rem;
-  width: 100%;
 }
 
 .wrapper-foo-login{
@@ -71,3 +59,12 @@ text-align: center;
 .wrapper-foo-login .btn{
   font-size: 0.8rem;
 }
+
+a.forget-password{
+  color:var(--secondary-color);
+  font-size: 0.7rem;
+  position:absolute;
+  top:10px;
+  right: 10px;
+}
+

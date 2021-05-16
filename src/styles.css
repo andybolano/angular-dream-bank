@@ -3,10 +3,13 @@
 
 :root{
     --primary-color:#042654;
-    --secondary-color:#0147cb;
+    --secondary-color:hsl(219, 99%, 40%);
+    --tertiary-color:#022F66;
+    --blue-light-color:#a4bcec;
+    --light-color:#ccdaf5;
     --gray-color:#e5e9f4;
     --primary-font:'Poppins', sans-serif;
-    --shadow:0px 0px 5px 0px rgba(0,0,0,0.07);
+    --shadow:0px 0px 5px 0px rgba(0,0,0,0.09);
 }
 
 p,
@@ -15,11 +18,11 @@ h2,
 h3,
 h4,
 button,
+.form-control,
 .btn{
     font-family:var(--primary-font) !important;
 }
 .bg-top{
-
   background-position:center;
   background-repeat: no-repeat;
   background-size: contain;
@@ -30,13 +33,16 @@ button,
   width: 100%;
 }
 
-.logo-negative{
+.logo{
   position: relative;
-  background-image:url('assets/images/logo-negative.PNG');
+  background-image:url('assets/images/logo-negative.png');
   background-position:center;
   background-repeat: no-repeat;
   background-size: contain;
   z-index: 1000;
+  margin:10px;
+  width: 180px;
+  height:80px;
 }
 
 p{
@@ -48,6 +54,7 @@ p{
 .btn{
     border-radius: 40px;
     font-size: 0.7rem;
+     width: 100%;
 }
 
 .btn-outline-light:hover{
@@ -58,7 +65,9 @@ p{
 }
 .form-control
 {
-  border:2px solid var(--secondary-color);
+  border:1px solid var(--secondary-color);
+  font-size: 0.9rem;
+  border-radius: 6px;
 }
 
 label{
@@ -69,12 +78,94 @@ label{
 }
 
 button:disabled{
-  background-color:#c3c3c3 !important;
-  border-color: #c3c3c3 !important;
-  color: rgb(114, 157, 182) !important;
+  background-color:var(--light-color) !important;
+  border-color: var(--light-color) !important;
+  color: var(--blue-light-color) !important;
 }
 
-.form-control{
-  border-radius: 6px;
+.group-err-message{
+  text-align: left;
+}
+.err-message{
+    color:red;
+    font-size: 0.7rem;
+    margin-left: 0;
 }
 
+.ng-invalid{
+  border-color:red;
+}
+
+.line-title {
+  border-radius: 20px;
+  height:3px;
+  margin: 10px auto;
+  width: 80px;
+}
+
+.btn-primary{
+  background-color:var(--secondary-color);
+  border-color:var(--secondary-color);
+}
+
+.btn-outline-primary{
+  border-color:var(--secondary-color);
+  color:var(--secondary-color);
+}
+
+.btn-outline-primary:hover{
+  background-color:var(--secondary-color);
+  border-color:var(--secondary-color);
+}
+
+.container-form{
+  text-align:center;
+}
+
+h5{
+margin:0;
+}
+
+
+.form-group{
+  position: relative;
+text-align: center;
+}
+
+.form-group label{
+  position: absolute;
+  text-align:center;
+  top:8px;
+
+}
+
+
+/********style full screen***********/
+.wrapper-full .btn{
+  background-color: #FFFFFF !important;
+  font-size: 1rem;
+}
+
+.wrapper-full .form-control{
+  background-color: transparent !important;
+  border-color: #FFFFFF;
+  color:#FFFFFF;
+}
+
+.form-control.monthly-income{
+  padding-right: 80px;
+}
+
+p.currency{
+  color:var(--blue-light-color) !important;
+  font-size: 0.8rem;
+  position:absolute;
+  top:9px;
+  right: 10px;
+}
+
+.btn.cancel{
+  background-color: transparent !important;
+  color:#FFFFFF;
+  margin-top: 10px;
+}

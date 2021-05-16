@@ -1,3 +1,14 @@
 <div class="wrapper-navbar">
-   
+    <div class="logo-min"></div>
+
+    <div id="menu">
+      <ul>
+        <ng-container *ngFor="let item of menuItems">
+          <li class="menu-title" *ngIf="item.isTitle">{{ item.label}}</li>
+          <li *ngIf="!item.isTitle" routerLinkActive="active">
+            <a [routerLink]="item.link">{{ item.label}}</a>
+          </li>
+        </ng-container>
+      </ul>
+    </div>
 </div>

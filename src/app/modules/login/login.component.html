@@ -1,6 +1,6 @@
-<div class="container">
+<div class="container form">
 
-<div class="logo-negative">
+<div class="logo">
 </div>
 <div class="bg-top"></div>
 
@@ -17,20 +17,31 @@
     <div class="form">
         <form [formGroup]="credentials" (ngSubmit)="login()">
             <div class="form-group">
-              <label>User</label>
+              <label>Cedula</label>
                   <input type="text"
                   class="form-control"
                   id="user"
                   placeholder=""
                   formControlName="user">
+
+                  <div *ngIf="credentials.get('user')?.errors && credentials.get('user')?.dirty" class="group-err-message">
+                    <span *ngIf="credentials.get('user')?.hasError('onlyNumber')" class="err-message">*Only numbers are allowed</span>
+                    <span *ngIf="credentials.get('user')?.hasError('withoutSpace')" class="err-message">*Does not accept spaces</span>
+                  </div>
+
             </div>
             <div class="form-group">
               <label>Password</label>
                   <input type="password"
-                  class="form-control"
+                  class="form-control password"
                   id="password"
                   placeholder=""
                   formControlName="password">
+                  <a href="javascript:;" class="forget-password">Forget password?</a>
+                  <div *ngIf="credentials.get('password')?.errors && credentials.get('password')?.dirty" class="group-err-message">
+                    <span *ngIf="credentials.get('password')?.hasError('lengthPassword')" class="err-message">*Number of invalid characters</span>
+                    <span *ngIf="credentials.get('password')?.hasError('withoutSpace')" class="err-message">*Does not accept spaces</span>
+                 </div>
 
             </div>
             <br>

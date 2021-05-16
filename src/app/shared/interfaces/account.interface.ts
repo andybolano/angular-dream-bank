@@ -6,6 +6,7 @@ export interface IAccount{
     accountNumber: string;
     type: string;
     currencyName: string;
+    status:boolean;
     balance: string;
     currencyCode: string;
     currencySymbol:string;

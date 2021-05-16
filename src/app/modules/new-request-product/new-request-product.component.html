@@ -1,1 +1,62 @@
-<p>new-product works!</p>
+<div class="container">
+
+  <div class="logo-negative">
+  </div>
+  <div class="bg-top"></div>
+    <div class="container-form">
+      <h5>Request</h5>
+      <div class="line-title"></div>
+      <h1>New product</h1>
+
+      <p>
+          Instant payments, and a lot of withdrawal methods available.
+      </p>
+
+      <div class="form">
+          <form [formGroup]="productFormGroup" (ngSubmit)="register()">
+              <div class="form-group">
+                <label>Product</label>
+                <select class="form-control">
+                    <option></option>
+                </select>
+
+              </div>
+              <div class="form-group">
+                <label>Cell Phone</label>
+                    <input type="password"
+                    class="form-control"
+                    id="cellPhone"
+                    placeholder=""
+                    formControlName="cellPhone">
+                    <div *ngIf="productFormGroup.get('cellPhone')?.errors && productFormGroup.get('cellPhone')?.dirty" class="group-err-message">
+                      <span *ngIf="productFormGroup.get('cellPhone')?.hasError('onlyNumber')" class="err-message">*Only numbers are allowed</span>
+                      <span *ngIf="productFormGroup.get('cellPhone')?.hasError('withoutSpace')" class="err-message">*Does not accept spaces</span>
+                   </div>
+
+              </div>
+              <div class="form-group">
+                <label>Monthly Income</label>
+                    <input type="text"
+                    class="form-control monthly-income"
+                    id="monthlyIncome"
+                    placeholder=""
+                    formControlName="monthlyIncome">
+                    <p class="currency">USD</p>
+                    <div *ngIf="productFormGroup.get('monthlyIncome')?.errors && productFormGroup.get('monthlyIncome')?.dirty" class="group-err-message">
+                      <span *ngIf="productFormGroup.get('monthlyIncome')?.hasError('onlyNumber')" class="err-message">*Only numbers are allowed</span>
+                      <span *ngIf="productFormGroup.get('monthlyIncome')?.hasError('withoutSpace')" class="err-message">*Does not accept spaces</span>
+                   </div>
+
+              </div>
+              <br>
+              <div>
+                  <button class="btn btn-primary" [disabled]="!productFormGroup.valid">Send</button>
+                  <a class="btn cancel" [routerLink]="['/account-summary']" routerLinkActive="router-link-active" >Cancel</a>
+              </div>
+
+          </form>
+      </div>
+    </div>
+
+
+  </div>
