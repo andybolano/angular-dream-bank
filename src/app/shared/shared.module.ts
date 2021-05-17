@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';  
+import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TableComponent } from './table/table.component'
-
+import { NgSelect2Module } from 'ng-select2';
+import { DynamicPipe } from '@bank/core/pipes/dynamic.pipe';
 
 
 @NgModule({
@@ -10,15 +11,19 @@ import { TableComponent } from './table/table.component'
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
+        NgSelect2Module,
+
     ],
     declarations: [
-        TableComponent
+        TableComponent,
+        DynamicPipe
     ],
     exports:[
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-        TableComponent,
+        NgSelect2Module,
+        TableComponent
 
     ],
     providers: [

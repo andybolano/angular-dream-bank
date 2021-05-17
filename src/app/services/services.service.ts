@@ -7,6 +7,7 @@ import { AuthService } from './auth.service';
 import { ServerService } from './server.service';
 import { AccountService } from './account.service';
 import { TransationService } from './transation.service';
+import { ProductService } from './product.service';
 import { HttpCacheService } from '@bank/core/http/httpcache.service';
 
 
@@ -23,9 +24,10 @@ export class ServicesService {
             public utilitiesService:UtilitiesService ,
             public sessionService:SessionService,
             public authService : AuthService,
-            public serverService : ServerService , 
+            public serverService : ServerService ,
             public accountService: AccountService,
             public transactionService: TransationService,
+            public productService: ProductService,
             public http:HttpCacheService
             ) { }
 }

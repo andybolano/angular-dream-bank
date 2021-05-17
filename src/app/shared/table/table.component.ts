@@ -1,11 +1,10 @@
 import { EventEmitter, Input, Output } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 
-
 @Component({
     selector: 'app-table',
     templateUrl: './table.component.html',
-    styleUrls: ['./table.component.css']
+    styleUrls: ['./table.component.css'],
 })
 export class TableComponent implements OnInit {
 
@@ -23,6 +22,8 @@ export class TableComponent implements OnInit {
     /** Data que se muestra en la tabla */
     dataTable  = [];
 
+
+
     constructor() { }
 
     ngOnInit(): void {
@@ -34,7 +35,7 @@ export class TableComponent implements OnInit {
 
     /**
      * Método que se ejecuta cuando las entradas del componente cambian
-     * @param changes 
+     * @param changes
      */
     ngOnChanges(changes:any) {
         if (changes.data) {

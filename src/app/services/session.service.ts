@@ -15,7 +15,7 @@ export class SessionService {
               private utilitiesServie: UtilitiesService) {
   }
 
- 
+
 
   /**
    * Method to save the authentication token
@@ -39,7 +39,12 @@ export class SessionService {
    */
   getSession(): any {
       const session:any = JSON.parse(localStorage.getItem('session') || '{}');
-      return (session) ? session : this.logOut(); 
+      return (session) ? session : this.logOut();
+  }
+
+  getId():number {
+    const session:IProfile = JSON.parse(localStorage.getItem('session') || '{}');
+    return (session) ? session.id : -1;
   }
 
   /**

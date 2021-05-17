@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ServicesService } from '@bank/services/services.service';
-import { IProfile, IResult, IAccount } from '@bank/shared/interfaces';
+import { IProfile, IResult, IAccount, ITable } from '@bank/shared/interfaces';
 
 
 @Component({
@@ -12,10 +12,10 @@ export class AccountSummaryComponent implements OnInit {
 
   accounts: IAccount[] = [];
   titleTable:string = "ALL ACCOUNTS";
-  configTable = [
+  configTable:ITable [] =  [
     {
         title: 'Type',
-        data: 'type',  
+        data: 'type',
     },
     {
         title: 'Account Name',
@@ -27,15 +27,20 @@ export class AccountSummaryComponent implements OnInit {
     },
     {
         title: 'Status',
-        data: 'status'
+        data: 'status',
+        align:'center',
+        pipe:'status'
     },
     {
         title: 'Currency',
         data: 'currencyCode',
+        align:'right'
     },
     {
         title: 'Balance',
-        data: 'balance'
+        data: 'balance',
+        align:'right',
+        pipe:'currency'
     }
   ];
 
@@ -59,7 +64,7 @@ export class AccountSummaryComponent implements OnInit {
             this.accounts.forEach(element => {
                element.accountNumber = this.service.utilitiesService.hideAccountNumber(element.accountNumber) + " - "+element.accountName;
             });
-           
+
         }
     }, (errorResponse:any) => {
         console.log(errorResponse)

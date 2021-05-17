@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ServicesService } from '@bank/services/services.service';
-import { IProfile, IResult, IAccount } from '@bank/shared/interfaces';
+import { IProfile, IResult, IAccount, ITable } from '@bank/shared/interfaces';
 
 @Component({
   selector: 'app-account-transactions',
@@ -24,13 +24,15 @@ export class AccountTransactionsComponent implements OnInit {
     status:false
   }
 
-  profile:IProfile = this.service.sessionService.getSession();
+  profileId:number = this.service.sessionService.getId();
+
   transactions: IAccount[] = [];
   titleTable:string = "Last Transactions";
-  configTable = [
+  configTable:ITable [] = [
     {
         title: 'Date',
         data: 'date',
+        pipe:'date'
     },
     {
         title: 'Description',
@@ -38,15 +40,20 @@ export class AccountTransactionsComponent implements OnInit {
     },
     {
         title: 'Currency',
-        data: 'currency'
+        data: 'currency',
+        align:'right'
     },
     {
         title: 'Value',
         data: 'value',
+        align:'right',
+        pipe:'currency'
     },
     {
         title: 'Balance',
-        data: 'balance'
+        data: 'balance',
+        align:'right',
+        pipe:'currency'
     }
   ];
 
@@ -66,12 +73,9 @@ export class AccountTransactionsComponent implements OnInit {
 
   getTransactions(idAccount:number){
 
-    this.service.transactionService.getTransactionsByAccount(this.profile.id, idAccount,(response:IResult) => {
+    this.service.transactionService.getTransactionsByAccount(this.profileId, idAccount,(response:IResult) => {
         if (response.success) {
             this.transactions = response.content;
-            if(this.transactions.length > 0){
-              this.calculateTotalBalance(this.transactions);
-            }
         }
     }, (errorResponse:any) => {
         console.log(errorResponse)
@@ -79,7 +83,7 @@ export class AccountTransactionsComponent implements OnInit {
   }
 
   getAccountById(idAccount:number){
-    this.service.accountService.getAccountById(this.profile.id, idAccount,(response:IResult) => {
+    this.service.accountService.getAccountById(this.profileId, idAccount,(response:IResult) => {
         if (response.success) {
             this.accountSelected = response.content;
         }
@@ -88,9 +92,6 @@ export class AccountTransactionsComponent implements OnInit {
     })
   }
 
-  calculateTotalBalance(transactions:IAccount[]){
-    this.service.accountService.calculateTotalBalance(transactions);
-  }
 
   get accountName():string{
     return this.service.utilitiesService.hideAccountNumber(this.accountSelected.accountNumber)+" - "+this.accountSelected.accountName;

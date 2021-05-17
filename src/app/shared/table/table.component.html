@@ -15,8 +15,9 @@
     <tbody>
         <tr *ngFor="let data of dataTable" (click)="selectedRow(data)">
             <ng-container *ngFor="let column of config">
-                <td *ngIf="column.data">
-                    {{data[column.data]}}
+
+                <td *ngIf="column.data" [ngClass]="{center: column?.align == 'center', right: column?.align == 'right'}">
+                   <span [innerHtml]="data[column.data] | dynamicPipe : column?.pipe"></span>
                 </td>
             </ng-container>
         </tr>

@@ -19,6 +19,10 @@ export class AccountService {
     return this.serverService.getUrlBackend();
   }
 
+
+
+
+
   getAccounts(idProfile: number, callback:any, callbackError:any){
     return this.http.get(0, this.urlServer + `v1/authenticate/${idProfile}/accounts` ,callback, callbackError);
   }
@@ -34,8 +38,8 @@ export class AccountService {
 
   getTotalBalance$():Observable<number>{
     return this.totalBalance$.asObservable();
-  } 
+  }
 
-  
+
 
 }

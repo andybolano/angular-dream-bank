@@ -13,8 +13,8 @@ export const menu: MenuItem[] = [
     },
     {
         id: 3,
-        label: 'Accounts',
-        link: 'javascript:;'
+        label: 'Products',
+        link: '/products'
     },
     {
       id: 4,
