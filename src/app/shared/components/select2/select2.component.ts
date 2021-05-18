@@ -7,7 +7,6 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class Select2Component implements OnInit {
 
-     /** Data de la tabla */
      @Input() data: [] = [];
      @Input() placeholder: string = "Search...";
      /** Salida del componente cuando un elemento es seleccionado */

@@ -65,6 +65,7 @@ export class MakeTransferComponent implements OnInit {
       });
 
       this.accountsData = accountsData;
+
   }
 
   selectElement(e:any):void{

@@ -47,7 +47,7 @@ export class NewProductRequestComponent implements OnInit {
   createForm(){
     this.productFormGroup = this.formBuilder.group({
 
-      name: ['', Validators.compose([
+      name: [TypeProducts.CREDIT, Validators.compose([
         Validators.required
       ])],
 
