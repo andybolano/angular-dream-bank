@@ -35,7 +35,7 @@ button,
 
 .logo{
   position: relative;
-  background-image:url('assets/images/logo-negative.png');
+  background-image:url('/assets/images/logo-negative.png');
   background-position:center;
   background-repeat: no-repeat;
   background-size: contain;

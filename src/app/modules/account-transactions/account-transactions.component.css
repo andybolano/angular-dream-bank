@@ -17,7 +17,7 @@
 .exit{
   width:25px;
   height:25px;
-  background-image: url('../../../assets/images/exit.png');
+  background-image: url('/../../../assets/images/exit.png');
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;

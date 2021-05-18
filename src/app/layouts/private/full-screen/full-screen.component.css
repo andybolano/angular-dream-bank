@@ -13,11 +13,11 @@ h5{
 }
 
 .logo{
-  background-image:url('../../../../assets/images/logo-positive.png');
+  background-image:url('/../../../../assets/images/logo-positive.png');
   margin:0;
 }
 
 .bg-top{
-  background-image: url('../../../../assets/images/bg-top-fullscreen.jpg');
+  background-image: url('/../../../../assets/images/bg-top-fullscreen.jpg');
 }
 
