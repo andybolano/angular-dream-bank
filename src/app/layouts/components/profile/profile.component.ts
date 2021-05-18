@@ -26,7 +26,7 @@ export class ProfileComponent implements OnInit {
   constructor(private service: ServicesService) { }
 
   ngOnInit(): void {
-    this.totalBalance$ = this.service.accountService.getTotalBalance$();
+   this.totalBalance$ = this.service.balanceService.getTotalBalance$();
     this.profile = this.service.sessionService.getSession();
   }
 
@@ -38,6 +38,6 @@ export class ProfileComponent implements OnInit {
     return `Your last login was ${formatDate(this.profile.lastLogin,"short", "en_US")}`
   }
 
- 
+
 
 }

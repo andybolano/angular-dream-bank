@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -8,9 +9,13 @@ export class UtilitiesService {
 
   constructor(private router: Router) { }
 
+
+  getUrlBackend() {
+    return environment.URL_BACKEND;
+  }
    /**
      * Method to go to a system path
-     * @param route 
+     * @param route
      */
 
     goTo(route: string){
@@ -23,12 +28,6 @@ export class UtilitiesService {
       return this.router.url;
     }
 
-    /**
-     * method that hides the last 4 characters of the account number
-     * * @param accountNumber 
-     */
-    hideAccountNumber(accountNumber:string):string{
-        return accountNumber.slice(0,-4)+"****";
-    }
+
 
 }

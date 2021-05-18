@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ServicesService } from '@bank/services/services.service';
-import { IProfile, IResult, IAccount, ITable } from '@bank/shared/interfaces';
+import { IResult, Account, ITable, Align, Pipe, StatusProduct} from '@bank/shared/interfaces';
 
 
 @Component({
@@ -10,37 +10,40 @@ import { IProfile, IResult, IAccount, ITable } from '@bank/shared/interfaces';
 })
 export class AccountSummaryComponent implements OnInit {
 
-  accounts: IAccount[] = [];
+  accounts: Account[] = [];
   titleTable:string = "ALL ACCOUNTS";
   configTable:ITable [] =  [
     {
+      title: 'Status',
+      data: 'status',
+      align:Align.CENTER,
+      pipe:Pipe.STATUS,
+    },
+    {
+      title: 'Created At',
+      data: 'createdAt',
+      align:Align.CENTER,
+      pipe:Pipe.DATE,
+    },
+    {
         title: 'Type',
-        data: 'type',
+        data: 'typeProduct',
     },
     {
         title: 'Account Name',
-        data: 'accountName'
+        data: 'fullAccountName'
     },
     {
-      title: 'Account Number',
-      data: 'accountNumber'
-    },
-    {
-        title: 'Status',
-        data: 'status',
-        align:'center',
-        pipe:'status'
-    },
-    {
-        title: 'Currency',
-        data: 'currencyCode',
-        align:'right'
+        title: 'Monthly Income',
+        data: 'monthlyIncome',
+        align:Align.RIGHT,
+        pipe:Pipe.CURRENCY,
     },
     {
         title: 'Balance',
         data: 'balance',
-        align:'right',
-        pipe:'currency'
+        align:Align.RIGHT,
+        pipe:Pipe.CURRENCY,
     }
   ];
 
@@ -50,34 +53,51 @@ export class AccountSummaryComponent implements OnInit {
     this.getAccount();
   }
 
-
   getAccount(){
-    let profile:IProfile = this.service.sessionService.getSession();
-    this.service.accountService.getAccounts(profile.id,(response:IResult) => {
+    let authenticateId =  this.service.sessionService.getId();
+    this.service.productService.getProductsByStatus(authenticateId, StatusProduct.ACTIVE,(response:IResult) => {
         if (response.success) {
-            this.accounts = response.content;
+          if(response.content.length > 0){
+            this.setAccounts(response.content);
+          }else{
+            this.service.balanceService.removeTotalBalance();
+          }
 
-            if(this.accounts.length > 0){
-            this.calculateTotalBalance(this.accounts)
-            }
-
-            this.accounts.forEach(element => {
-               element.accountNumber = this.service.utilitiesService.hideAccountNumber(element.accountNumber) + " - "+element.accountName;
-            });
-
+          this.service.alertService.success('successfully products', 'products successfully completed')
         }
     }, (errorResponse:any) => {
-        console.log(errorResponse)
+      this.service.alertService.error('Error', errorResponse)
+
     })
   }
 
+  setAccounts(accounts:Account[]){
+    accounts.map((account) =>{
+        this.accounts.push(new Account(
+                                account.id,
+                                <StatusProduct>account.status,
+                                account.updateAt,
+                                account.createdAt,
+                                account.accountName,
+                                account.accountNumber,
+                                account.balance,
+                                account.typeProduct,
+                                account.cellPhone,
+                                account.monthlyIncome,
+                                account.authenticateId
+                            ));
+    })
+
+     this.calculateTotalBalance(this.accounts)
+  }
+
   selectElement(e:any) {
-    const accountSelect:IAccount = e;
+    const accountSelect:Account = e;
     this.service.utilitiesService.goTo(`/account/${accountSelect.id}/transactions`)
   }
 
-  calculateTotalBalance(accounts:IAccount[]){
-    this.service.accountService.calculateTotalBalance(accounts);
+  calculateTotalBalance(accounts:Account[]){
+    this.service.balanceService.calculateTotalBalance(accounts);
   }
 
 }

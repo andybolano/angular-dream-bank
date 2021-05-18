@@ -16,10 +16,10 @@ export class SessionService {
   }
 
 
+  /**PENDIENTE DE AGREGAR ENCRIPTACIÓN */
 
   /**
    * Method to save the authentication token
-   * pendiente de encriptar
    * @param token
    */
   setToken(token: string) {
@@ -38,12 +38,16 @@ export class SessionService {
    * @returns session
    */
   getSession(): any {
-      const session:any = JSON.parse(localStorage.getItem('session') || '{}');
+      const session:any = JSON.parse(sessionStorage.getItem('session') || '{}');
       return (session) ? session : this.logOut();
   }
 
+  /**
+   * Method to get the ID user.
+   * @returns ID
+   */
   getId():number {
-    const session:IProfile = JSON.parse(localStorage.getItem('session') || '{}');
+    const session:IProfile = JSON.parse(sessionStorage.getItem('session') || '{}');
     return (session) ? session.id : -1;
   }
 
@@ -53,7 +57,7 @@ export class SessionService {
    * pendiente de encriptar
    */
   setSession(session: IProfile): void {
-    localStorage.setItem('session', JSON.stringify(session));
+    sessionStorage.setItem('session', JSON.stringify(session));
   }
 
   /**
@@ -61,10 +65,11 @@ export class SessionService {
    * Revisar si debe estar aqui o en el auth service
    */
   logOut(): void {
-    localStorage.clear();
+    sessionStorage.clear();
     this.cookieService.delete('token', '/');
     this.utilitiesServie.goTo('login');
   }
+
 
   IsLogged(): boolean {
     var token = this.getToken();

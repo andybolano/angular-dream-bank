@@ -1,6 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
-import { IProduct, IResult, ITable } from '@bank/shared/interfaces';
+import { Product, IResult, ITable, Align, Pipe, TypeProducts, StatusProduct, EventClick } from '@bank/shared/interfaces';
 import { ServicesService } from '@bank/services/services.service';
 
 
@@ -11,42 +11,37 @@ import { ServicesService } from '@bank/services/services.service';
 })
 export class ProductsComponent implements OnInit {
 
-  products: IProduct[] = [];
+  products: Product[] = [];
+  profileId:number = this.service.sessionService.getId();
   titleTable:string = "My Products";
   configTable:ITable []= [
     {
       title: 'Status',
       data: 'status',
-      align:'center',
-      pipe:'status'
+      align: Align.CENTER,
+      pipe:'status',
+      event:EventClick.UPDATE
     },
     {
         title: 'Created At',
         data: 'createdAt',
-        pipe:'date'
+        pipe:Pipe.DATE
     },
     {
-      title: 'Name',
-      data: 'name',
+      title: 'Type Product',
+      data: 'typeProduct',
     },
     {
         title: 'Cell Phone',
         data: 'cellPhone'
     },
     {
-        title: 'Currency Code',
-        data: 'currencyCode',
-        align:'right'
-    },
-    {
         title: 'Monthly Income',
         data: 'monthlyIncome',
-        align:'right',
-        pipe:'currency'
+        align: Align.RIGHT,
+        pipe:Pipe.CURRENCY
     }
   ];
-
-
 
   constructor(private service: ServicesService) { }
 
@@ -55,14 +50,66 @@ export class ProductsComponent implements OnInit {
   }
 
   getProducts(){
-
-    this.service.productService.getProducts(this.service.sessionService.getId(),(response:IResult) => {
+    this.service.productService.getProducts(this.profileId,(response:IResult) => {
       if (response.success) {
-        this.products = response.content;
+        this.service.alertService.success('successfully products', 'products successfully completed')
+        if(response.content.length > 0) this.setProducts(response.content);
       }
   }, (errorResponse:any) => {
-      console.log(errorResponse)
+    this.service.alertService.error('Error', errorResponse)
   })
+  }
+
+  updateProduct(product:Product,status:StatusProduct){
+    product.status = status;
+    this.service.productService.updateProduct(this.profileId, product,(response:IResult) => {
+      if (response.success) {
+        if(response.content.length > 0) this.setProducts(response.content);
+      }
+    }, (errorResponse:any) => {
+        console.log(errorResponse)
+    })
+  }
+
+  setProducts(products:Product[]){
+      products.map((product) =>{
+        this.products.push(new Product(
+                              product.id,
+                              <StatusProduct>product.status,
+                              product.createdAt,
+                              <TypeProducts>product.typeProduct,
+                              product.cellPhone,
+                              product.monthlyIncome,
+                              product.authenticateId,
+                              product.balance
+                              ));
+      })
+  }
+
+  selectElement(e:any) {
+    if(e.typeAction == EventClick.UPDATE){
+      this.updateProduct(e,this.getNewStatus(e.status));
+    }
+  }
+
+  getNewStatus(status:StatusProduct):StatusProduct{
+
+    let newStatus:StatusProduct = StatusProduct.WAITING;
+
+    if(status == StatusProduct.WAITING){
+          newStatus = StatusProduct.ACTIVE;
+    }
+
+    if(status == StatusProduct.ACTIVE){
+      newStatus = StatusProduct.INACTIVE;
+    }
+
+    if(status == StatusProduct.INACTIVE){
+      newStatus = StatusProduct.ACTIVE;
+    }
+
+    return newStatus;
+
   }
 
 

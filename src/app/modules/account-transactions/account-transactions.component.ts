@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ServicesService } from '@bank/services/services.service';
-import { IProfile, IResult, IAccount, ITable } from '@bank/shared/interfaces';
+import { IResult, ITable, Align, Pipe, Product, StatusProduct, Account, Transaction } from '@bank/shared/interfaces';
 
 @Component({
   selector: 'app-account-transactions',
@@ -10,53 +10,52 @@ import { IProfile, IResult, IAccount, ITable } from '@bank/shared/interfaces';
 })
 export class AccountTransactionsComponent implements OnInit {
 
-  accountSelected:IAccount = {
-    id:-1,
-    authenticateId: -1,
-    createdAt: "",
-    accountName: "",
-    accountNumber: "0",
-    type: "",
-    currencyName: "",
-    balance: "0",
-    currencyCode: "",
-    currencySymbol:"",
-    status:false
-  }
-
   profileId:number = this.service.sessionService.getId();
 
-  transactions: IAccount[] = [];
+  transactions:any[] = [];
+  transactionsFilter:any[] = [];
+  AccountSelect:Partial<Account> = {};
   titleTable:string = "Last Transactions";
   configTable:ITable [] = [
     {
-        title: 'Date',
-        data: 'date',
+      title: 'status',
+      data: 'status',
+      pipe:'statusTransaction'
+    },
+    {
+        title: 'created At',
+        data: 'createdAt',
         pipe:'date'
     },
     {
-        title: 'Description',
-        data: 'description'
-    },
-    {
-        title: 'Currency',
-        data: 'currency',
-        align:'right'
+        title: 'Commerce',
+        data: 'commerce'
     },
     {
         title: 'Value',
         data: 'value',
-        align:'right',
-        pipe:'currency'
+        align:Align.RIGHT,
+        pipe: Pipe.CURRENCY
+    },
+    {
+      title: 'Tax',
+      data: 'tax',
+      align:Align.RIGHT,
+      pipe: Pipe.CURRENCY
+    },
+    {
+      title: 'Total',
+      data: 'total',
+      align:Align.RIGHT,
+      pipe: Pipe.CURRENCY
     },
     {
         title: 'Balance',
         data: 'balance',
-        align:'right',
-        pipe:'currency'
+        align:Align.RIGHT,
+        pipe: Pipe.CURRENCY
     }
   ];
-
 
   constructor(private service:ServicesService, private activatedRoute: ActivatedRoute) { }
 
@@ -64,37 +63,71 @@ export class AccountTransactionsComponent implements OnInit {
 
     this.activatedRoute.paramMap.subscribe(params => {
       const urlParameters:any = params;
-      const idAccount = urlParameters.params.idAccount;
-      this.getTransactions(idAccount);
-      this.getAccountById(idAccount);
+      const productId = urlParameters.params.productId;
+       this.getTransactions(productId);
+      this.getProductById(productId);
   });
 
   }
 
-  getTransactions(idAccount:number){
-
-    this.service.transactionService.getTransactionsByAccount(this.profileId, idAccount,(response:IResult) => {
+ getTransactions(productId:number){
+    this.service.transactionService.getTransactionsByAccount(this.profileId, productId,(response:IResult) => {
         if (response.success) {
             this.transactions = response.content;
+            this.transactionsFilter = [...this.transactions]
+            this.service.alertService.success('successfully transactions', 'transactions successfully completed')
         }
     }, (errorResponse:any) => {
-        console.log(errorResponse)
+      this.service.alertService.error('Error', errorResponse)
     })
   }
 
-  getAccountById(idAccount:number){
-    this.service.accountService.getAccountById(this.profileId, idAccount,(response:IResult) => {
+  getProductById(productId:number){
+    this.service.productService.getProductById(this.profileId, productId,(response:IResult) => {
         if (response.success) {
-            this.accountSelected = response.content;
+          this.setProduct(response.content);
         }
     }, (errorResponse:any) => {
         console.log(errorResponse)
     })
   }
 
+  setProduct(account:Account):void {
+   this.AccountSelect = new Account(
+         account.id,
+        <StatusProduct>account.status,
+        account.updateAt,
+        account.createdAt,
+        account.accountName,
+        account.accountNumber,
+        account.balance,
+        account.typeProduct,
+        account.cellPhone,
+        account.monthlyIncome,
+        account.authenticateId
+    )
 
-  get accountName():string{
-    return this.service.utilitiesService.hideAccountNumber(this.accountSelected.accountNumber)+" - "+this.accountSelected.accountName;
   }
+
+  selectDate(e:any){
+    this.filterToDate(e);
+  }
+
+  filterToDate(e:any){
+      const start = new Date(e.start_date+"T00:00:00");
+      const end = new Date(e.end_date+"T23:59:59");
+      this.transactionsFilter = this.service.transactionService.filterByDate(this.transactions,start, end);
+      this.service.alertService.success('successfully Filter', 'filter completed')
+  }
+
+  get totalTransaction(){
+    return this.service.transactionService.calculateTotal(this.transactionsFilter);
+  }
+
+
+
+
+
+
 
 }

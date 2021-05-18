@@ -9,7 +9,7 @@ const routes: Routes = [
     component: WithNavigationComponent,
     loadChildren: () => import('../../../modules/account-summary/account-summary.module').then(mod => mod.AccountSummaryModule),
   },{
-    path: 'account/:idAccount/transactions',
+    path: 'account/:productId/transactions',
     component: WithNavigationComponent,
     loadChildren: () => import('../../../modules/account-transactions/account-transactions.module').then(mod => mod.AccountTransactionsModule),
   },

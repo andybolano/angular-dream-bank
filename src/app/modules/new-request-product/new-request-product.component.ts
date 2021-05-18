@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {FormValidator} from '@bank/core/validation/validator';
-import { IProfile, IProduct, IResult } from '@bank/shared/interfaces';
+import { IResult, Product, StatusProduct, TypeProducts } from '@bank/shared/interfaces';
 import { ServicesService } from '@bank/services/services.service';
 import { Select2OptionData } from 'ng-select2';
 @Component({
@@ -15,28 +15,29 @@ export class NewProductRequestComponent implements OnInit {
   productFormGroup: FormGroup = this.formBuilder.group({});
 
   //podrian venir de un servicio
-  products: Array<Select2OptionData> = [];
+  typeProducts: Array<Select2OptionData> = [];
   isSave:boolean = false;
+  placeholderSelect = "Selected product..."
 
   constructor(private formBuilder: FormBuilder, private service: ServicesService) { }
 
   ngOnInit(): void {
-    this.products = [
+    this.typeProducts = [
       {
-        id: 'Agile credit',
-        text: "Agile credit"
+        id: TypeProducts.CREDIT,
+        text: TypeProducts.CREDIT
       },
       {
-        id: 'Credit card',
-        text: "Credit card"
+        id: TypeProducts.CARD,
+        text: TypeProducts.CARD
       },
       {
-        id: 'Savings account',
-        text:  "Savings account"
+        id: TypeProducts.SAVINGS,
+        text:  TypeProducts.SAVINGS
       },
       {
-        id: 'Housing lease',
-        text: "Housing lease"
+        id: TypeProducts.LEASING,
+        text: TypeProducts.LEASING
       }
     ];
 
@@ -65,18 +66,19 @@ export class NewProductRequestComponent implements OnInit {
     });
   }
 
-  register(){
+ register(){
 
     if (!this.productFormGroup.valid) {
       return;
     }
 
+const valueForm = this.productFormGroup.value;
+  const product = new Product (0,StatusProduct.WAITING,"",valueForm.name,
+                                valueForm.cellPhone,
+                                parseFloat(valueForm.monthlyIncome),
+                                this.service.sessionService.getId(), parseFloat(valueForm.monthlyIncome));
 
-  const product_value:IProduct = this.productFormGroup.value;
-  product_value.idProfile = this.service.sessionService.getId();
-  product_value.currencyCode = "USD";
-
-    this.service.productService.saveProduct(product_value,(response:IResult) => {
+ this.service.productService.saveProduct(product,(response:IResult) => {
       if (response.success) {
           this.isSave = true;
       }
@@ -84,7 +86,14 @@ export class NewProductRequestComponent implements OnInit {
       console.log(errorResponse)
   })
 
+}
 
+selectElement(e:any):void{
+  if(e){
+    this.productFormGroup.patchValue({
+      name:e
+    })
   }
+}
 
 }

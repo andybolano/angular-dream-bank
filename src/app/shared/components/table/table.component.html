@@ -13,11 +13,11 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let data of dataTable" (click)="selectedRow(data)">
+        <tr *ngFor="let data of dataTable">
             <ng-container *ngFor="let column of config">
 
-                <td *ngIf="column.data" [ngClass]="{center: column?.align == 'center', right: column?.align == 'right'}">
-                   <span [innerHtml]="data[column.data] | dynamicPipe : column?.pipe"></span>
+                <td [ngClass]="{center: column?.align == 'center', right: column?.align == 'right'}">
+                   <span [innerHtml]="data[column.data] | dynamicPipe : column?.pipe" (click)="selectedRow(data,column.event)"></span>
                 </td>
             </ng-container>
         </tr>

@@ -1,7 +1,10 @@
+<br>
+<p>* Click in status for change status</p>
 <app-table
     #table
     [config]="configTable"
     [data]="products"
     [title]="titleTable"
+    (Selected)="selectElement($event)">
     >
 </app-table>

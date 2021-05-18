@@ -1,0 +1,75 @@
+<div class="container">
+
+  <div class="logo-negative">
+  </div>
+  <div class="bg-top"></div>
+    <div class="container-form" *ngIf="!isSave">
+      <h5>Make Transfer</h5>
+      <div class="line-title"></div>
+      <h1>New Transaction</h1>
+      <p>
+          Instant payments, and a lot of withdrawal methods available.
+      </p>
+
+      <div class="form">
+          <form [formGroup]="transactionFormGroup" (ngSubmit)="register()">
+
+            <div class="form-group">
+              <label>Account</label>
+              <app-select2 [data]="accountsData"
+                           [placeholder]="placeholderSelect"
+                           (Selected)="selectElement($event)">
+               </app-select2>
+            </div>
+
+          <div class="form-group">
+                <label>Commerce</label>
+                    <input type="text"
+                    class="form-control"
+                    id="commerce"
+                    placeholder=""
+                    formControlName="commerce">
+                    <div *ngIf="transactionFormGroup.get('commerce')?.errors && transactionFormGroup.get('commerce')?.dirty" class="group-err-message">
+                      <span *ngIf="transactionFormGroup.get('commerce')?.hasError('onlyText')" class="err-message">*Only text are allowed</span>
+                   </div>
+
+              </div>
+              <div class="form-group">
+                <label>Value</label>
+                    <input type="text"
+                    class="form-control monthly-income"
+                    id="value"
+                    placeholder=""
+                    formControlName="value">
+                    <p class="currency">USD</p>
+                    <div *ngIf="transactionFormGroup.get('value')?.errors && transactionFormGroup.get('value')?.dirty" class="group-err-message">
+                      <span *ngIf="transactionFormGroup.get('value')?.hasError('onlyNumber')" class="err-message">*Only numbers are allowed</span>
+                      <span *ngIf="transactionFormGroup.get('value')?.hasError('withoutSpace')" class="err-message">*Does not accept spaces</span>
+                   </div>
+
+              </div>
+              <br>
+              <div>
+                  <button class="btn btn-primary" [disabled]="!transactionFormGroup.valid">Send</button>
+                  <a class="btn cancel" [routerLink]="['/account-summary']" routerLinkActive="router-link-active" >Cancel</a>
+              </div>
+
+          </form>
+      </div>
+    </div>
+
+    <div class="container-form container-message" *ngIf="isSave">
+        <h5>New Transaction</h5>
+        <div class="line-title"></div>
+        <h1>Request Success</h1>
+      <br>
+        <p>
+            Your Transaction has been sent successfully, an advisor will contact you soon.
+        </p>
+        <br>
+        <a class="btn btn-primary" [routerLink]="['/account-summary']">Go Home</a>
+    </div>
+
+
+  </div>
+

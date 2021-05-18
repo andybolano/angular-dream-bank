@@ -1,3 +1,7 @@
+.container{
+  position: relative;
+}
+
 .account-card{
     align-items: center;
     background-color: var(--gray-color);
@@ -20,3 +24,10 @@
 
 }
 
+.total-transaction{
+  margin: 10px;
+}
+
+.total-transaction h5{
+  color:var(--secondary-color);
+}

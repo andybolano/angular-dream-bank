@@ -1,15 +1,28 @@
+
 <div class="account-card">
     <p>
-        {{accountName}}
+     {{AccountSelect.fullAccountName}}
     </p>
     <a [routerLink]="['/account-summary']" class="exit"></a>
 </div>
 
+<div class="card">
+  <div class="card-body">
+    <app-date-filter (SelectedDate)="selectDate($event)"></app-date-filter>
+  </div>
+</div>
+
+<div class="total-transaction">
+  <h5>Total transactions: {{totalTransaction | currency}}</h5>
+</div>
+
+
 <app-table
     #table
     [config]="configTable"
-    [data]="transactions"
+    [data]="transactionsFilter"
     [title]="titleTable"
     >
 </app-table>
+
 
