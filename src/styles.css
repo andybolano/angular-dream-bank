@@ -35,21 +35,23 @@ button,
 
 .logo{
   position: relative;
-  background-image:url('src/assets/images/logo-negative.png');
+  background-image:url('./assets/images/logo-negative.png');
   background-position:center;
   background-repeat: no-repeat;
   background-size: contain;
+  height:80px;
   z-index: 1000;
   margin:10px;
   width: 180px;
-  height:80px;
+
 }
 
 p{
     font-size: 0.8rem;
+    font-weight: 300;
     margin: 0;
     padding: 0;
-    font-weight: 300;
+
 }
 .btn{
     border-radius: 40px;
